@@ -1,6 +1,8 @@
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import app from './app.js';
+import petSeed from './data/petSeed.js';
+import Pet from './models/Pet.js';
 
 dotenv.config();
 
@@ -12,6 +14,13 @@ async function startServer() {
     try {
       await mongoose.connect(mongoUri);
       console.log('MongoDB connected');
+
+      const totalPets = await Pet.countDocuments();
+
+      if (totalPets === 0) {
+        await Pet.insertMany(petSeed);
+        console.log('Sample pets inserted');
+      }
     } catch (error) {
       console.error('MongoDB connection failed:', error.message);
     }
@@ -23,4 +32,3 @@ async function startServer() {
 }
 
 startServer();
-

@@ -1,6 +1,7 @@
 import cors from 'cors';
 import express from 'express';
 import morgan from 'morgan';
+import petRoutes from './routes/petRoutes.js';
 
 const app = express();
 
@@ -11,6 +12,8 @@ app.use(
 );
 app.use(express.json());
 app.use(morgan('dev'));
+
+app.use('/api/pets', petRoutes);
 
 app.get('/api/health', (_req, res) => {
   res.json({
