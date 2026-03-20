@@ -1,0 +1,11 @@
+node_modules/
+dist/
+coverage/
+.DS_Store
+Thumbs.db
+AGENTS.md
+.env
+.env.*
+!.env.example
+frontend/.vite/
+backend/logs/
