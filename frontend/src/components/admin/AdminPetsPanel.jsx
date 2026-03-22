@@ -127,7 +127,7 @@ function AdminPetsPanel({
             <div>
               <h3>{pet.name}</h3>
               <p>
-                {pet.breed} · {pet.location}
+                {pet.breed} - {pet.location}
               </p>
             </div>
             <div className="admin-actions">

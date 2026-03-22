@@ -20,7 +20,7 @@ function AdminApplicationsPanel({ applicationState, onReview }) {
             <div>
               <h3>{application.pet.name}</h3>
               <p>
-                {application.pet.breed} · {application.applicant.name} · {application.applicant.email}
+                {application.pet.breed} - {application.applicant.name} - {application.applicant.email}
               </p>
               <p className="review-note">
                 {application.message || 'No applicant note provided.'}

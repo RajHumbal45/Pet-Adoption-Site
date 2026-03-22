@@ -73,7 +73,7 @@ function UserDashboard({ user, applications, onLogout }) {
                 <div>
                   <h3>{application.pet.name}</h3>
                   <p>
-                    {application.pet.breed} · {application.pet.location}
+                    {application.pet.breed} - {application.pet.location}
                   </p>
                   <p className="review-note">
                     {application.message || 'No application note was submitted.'}

@@ -42,7 +42,7 @@ function PetDetailsPanel({ detailState, currentUser, adoptionState, onApply, onC
               <div>
                 <h3>{item.name}</h3>
                 <p>
-                  {item.breed} · {item.species}
+                  {item.breed} - {item.species}
                 </p>
               </div>
               <span className="pet-badge">{item.age} yrs</span>
@@ -164,3 +164,4 @@ PetDetailsPanel.defaultProps = {
 };
 
 export default PetDetailsPanel;
+

@@ -16,6 +16,8 @@ npm run dev
 
 Frontend runs on `http://localhost:5173` and backend runs on `http://localhost:5000`.
 
+If `5173` is already busy, Vite will move to the next open port automatically.
+
 ## Environment
 
 Create local environment files before running the app:
@@ -24,6 +26,7 @@ Create local environment files before running the app:
 - `frontend/.env` based on `frontend/.env.example`
 
 `ADMIN_SETUP_KEY` is optional and only needed if you want registration to mint an admin account.
+Run MongoDB locally on `mongodb://127.0.0.1:27017/pet_adoption` for seeded pet data and adoption flows.
 
 ## Auth Endpoints
 
@@ -31,3 +34,20 @@ Create local environment files before running the app:
 - `POST /api/auth/login`
 - `GET /api/auth/me`
 - `GET /api/auth/admin-check`
+
+## Pet Endpoints
+
+- `GET /api/pets`
+- `GET /api/pets/:id`
+- `GET /api/pets/admin/all`
+- `POST /api/pets`
+- `PUT /api/pets/:id`
+- `PATCH /api/pets/:id/status`
+- `DELETE /api/pets/:id`
+
+## Adoption Endpoints
+
+- `POST /api/adoptions`
+- `GET /api/adoptions/me`
+- `GET /api/adoptions/admin/all`
+- `PATCH /api/adoptions/:id/status`

@@ -15,7 +15,7 @@ function PetCard({ pet, onViewDetails }) {
           <div>
             <h2>{pet.name}</h2>
             <p>
-              {pet.breed} · {pet.species}
+              {pet.breed} - {pet.species}
             </p>
           </div>
           <span className="pet-badge">{pet.age} yrs</span>
@@ -60,3 +60,4 @@ PetCard.propTypes = {
 };
 
 export default PetCard;
+
