@@ -1,5 +1,7 @@
+import AdminApplicationsPanel from './components/admin/AdminApplicationsPanel';
 import AdminPetsPanel from './components/admin/AdminPetsPanel';
 import AuthPanel from './components/auth/AuthPanel';
+import { useAdminApplications } from './hooks/useAdminApplications';
 import { useAdminPets } from './hooks/useAdminPets';
 import { useAuth } from './hooks/useAuth';
 import { useMyApplications } from './hooks/useMyApplications';
@@ -17,6 +19,7 @@ function App() {
     removePet,
     updateStatus,
   } = useAdminPets(authState.user);
+  const { adminApplicationsState, reviewApplication } = useAdminApplications(authState.user);
 
   return (
     <main className="app-shell">
@@ -52,15 +55,21 @@ function App() {
             applications={applicationState}
           />
           {authState.user?.role === 'admin' ? (
-            <AdminPetsPanel
-              adminState={adminState}
-              onFieldChange={updateAdminField}
-              onSubmit={submitPet}
-              onEdit={startEditing}
-              onReset={resetForm}
-              onDelete={removePet}
-              onStatusChange={updateStatus}
-            />
+            <>
+              <AdminPetsPanel
+                adminState={adminState}
+                onFieldChange={updateAdminField}
+                onSubmit={submitPet}
+                onEdit={startEditing}
+                onReset={resetForm}
+                onDelete={removePet}
+                onStatusChange={updateStatus}
+              />
+              <AdminApplicationsPanel
+                applicationState={adminApplicationsState}
+                onReview={reviewApplication}
+              />
+            </>
           ) : null}
         </div>
       </section>
