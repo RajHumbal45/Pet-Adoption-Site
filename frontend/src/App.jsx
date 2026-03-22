@@ -1,4 +1,6 @@
+import AdminPetsPanel from './components/admin/AdminPetsPanel';
 import AuthPanel from './components/auth/AuthPanel';
+import { useAdminPets } from './hooks/useAdminPets';
 import { useAuth } from './hooks/useAuth';
 import { useMyApplications } from './hooks/useMyApplications';
 import PetListingPage from './pages/PetListingPage';
@@ -6,6 +8,15 @@ import PetListingPage from './pages/PetListingPage';
 function App() {
   const { mode, setMode, formState, authState, updateField, submitAuth, logout } = useAuth();
   const { applicationState, refreshApplications } = useMyApplications(authState.user);
+  const {
+    adminState,
+    updateField: updateAdminField,
+    startEditing,
+    resetForm,
+    submitPet,
+    removePet,
+    updateStatus,
+  } = useAdminPets(authState.user);
 
   return (
     <main className="app-shell">
@@ -29,16 +40,29 @@ function App() {
           currentUser={authState.user}
           onApplicationCreated={refreshApplications}
         />
-        <AuthPanel
-          mode={mode}
-          onModeChange={setMode}
-          formState={formState}
-          authState={authState}
-          onFieldChange={updateField}
-          onSubmit={submitAuth}
-          onLogout={logout}
-          applications={applicationState}
-        />
+        <div className="sidebar-stack">
+          <AuthPanel
+            mode={mode}
+            onModeChange={setMode}
+            formState={formState}
+            authState={authState}
+            onFieldChange={updateField}
+            onSubmit={submitAuth}
+            onLogout={logout}
+            applications={applicationState}
+          />
+          {authState.user?.role === 'admin' ? (
+            <AdminPetsPanel
+              adminState={adminState}
+              onFieldChange={updateAdminField}
+              onSubmit={submitPet}
+              onEdit={startEditing}
+              onReset={resetForm}
+              onDelete={removePet}
+              onStatusChange={updateStatus}
+            />
+          ) : null}
+        </div>
       </section>
     </main>
   );
