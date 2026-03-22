@@ -39,6 +39,11 @@ body {
   align-items: start;
 }
 
+.main-stack {
+  display: grid;
+  gap: 20px;
+}
+
 .sidebar-stack {
   display: grid;
   gap: 18px;
@@ -71,6 +76,93 @@ body {
   grid-template-columns: minmax(0, 1fr) 220px;
   gap: 24px;
   align-items: end;
+}
+
+.dashboard-shell {
+  display: grid;
+  gap: 20px;
+}
+
+.dashboard-hero {
+  width: 100%;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 18px;
+}
+
+.dashboard-card {
+  border-radius: 24px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid #d8e4ef;
+  box-shadow: 0 14px 36px rgba(23, 50, 77, 0.08);
+}
+
+.dashboard-section-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.stats-grid div,
+.dashboard-application-item {
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: #f5f9fc;
+}
+
+.stats-grid span,
+.stats-grid strong {
+  display: block;
+}
+
+.stats-grid span {
+  color: #6d8398;
+  font-size: 0.85rem;
+}
+
+.stats-grid strong {
+  margin-top: 4px;
+  font-size: 1.6rem;
+}
+
+.dashboard-application-list {
+  display: grid;
+  gap: 12px;
+}
+
+.dashboard-application-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dashboard-application-item h3,
+.dashboard-application-item p,
+.dashboard-application-meta small {
+  margin: 0;
+}
+
+.dashboard-application-item p {
+  margin-top: 6px;
+  color: #58718a;
+}
+
+.dashboard-application-meta {
+  display: grid;
+  justify-items: end;
+  gap: 10px;
 }
 
 .eyebrow {
@@ -760,7 +852,9 @@ h1 {
 
   .pet-meta,
   .detail-facts,
-  .admin-form {
+  .admin-form,
+  .dashboard-grid,
+  .stats-grid {
     grid-template-columns: 1fr;
   }
 
