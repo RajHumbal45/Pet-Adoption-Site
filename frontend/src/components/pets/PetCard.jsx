@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-function PetCard({ pet }) {
+function PetCard({ pet, onViewDetails }) {
   return (
     <article className="pet-card">
       <img
@@ -35,6 +35,9 @@ function PetCard({ pet }) {
             <dd>{pet.gender}</dd>
           </div>
         </dl>
+        <button className="secondary-button" type="button" onClick={() => onViewDetails(pet._id)}>
+          View details
+        </button>
       </div>
     </article>
   );
@@ -42,7 +45,7 @@ function PetCard({ pet }) {
 
 PetCard.propTypes = {
   pet: PropTypes.shape({
-    _id: PropTypes.string,
+    _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     species: PropTypes.string.isRequired,
     breed: PropTypes.string.isRequired,
@@ -53,6 +56,7 @@ PetCard.propTypes = {
     imageUrl: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
   }).isRequired,
+  onViewDetails: PropTypes.func.isRequired,
 };
 
 export default PetCard;

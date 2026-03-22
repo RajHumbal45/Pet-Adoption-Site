@@ -54,6 +54,25 @@ const petSchema = new mongoose.Schema(
       trim: true,
       maxlength: 600,
     },
+    energyLevel: {
+      type: String,
+      enum: ['Low', 'Moderate', 'High'],
+      required: true,
+    },
+    goodWith: {
+      type: [String],
+      default: [],
+    },
+    vaccinated: {
+      type: Boolean,
+      default: true,
+    },
+    medicalNotes: {
+      type: String,
+      trim: true,
+      default: '',
+      maxlength: 300,
+    },
   },
   {
     timestamps: true,
@@ -65,4 +84,3 @@ petSchema.index({ name: 'text', breed: 'text' });
 const Pet = mongoose.model('Pet', petSchema);
 
 export default Pet;
-

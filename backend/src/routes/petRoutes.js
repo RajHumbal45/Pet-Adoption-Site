@@ -1,4 +1,5 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import Pet from '../models/Pet.js';
 import {
   availableAgeGroups,
@@ -31,5 +32,23 @@ router.get('/', async (req, res) => {
   });
 });
 
-export default router;
+router.get('/:id', async (req, res) => {
+  if (!mongoose.isValidObjectId(req.params.id)) {
+    res.status(400).json({ message: 'Invalid pet id' });
+    return;
+  }
 
+  const pet = await Pet.findOne({
+    _id: req.params.id,
+    adoptionStatus: 'available',
+  }).lean();
+
+  if (!pet) {
+    res.status(404).json({ message: 'Pet not found' });
+    return;
+  }
+
+  res.json({ item: pet });
+});
+
+export default router;

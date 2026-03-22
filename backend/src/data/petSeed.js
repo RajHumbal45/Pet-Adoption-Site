@@ -12,6 +12,10 @@ const petSeed = [
       'https://images.unsplash.com/photo-1505628346881-b72b27e84530?auto=format&fit=crop&w=900&q=80',
     description:
       'A playful beagle who loves short walks, puzzle toys, and staying close to people.',
+    energyLevel: 'High',
+    goodWith: ['Children', 'Apartment living'],
+    vaccinated: true,
+    medicalNotes: 'No active medical concerns.',
   },
   {
     name: 'Luna',
@@ -26,6 +30,10 @@ const petSeed = [
       'https://images.unsplash.com/photo-1519052537078-e6302a4968d4?auto=format&fit=crop&w=900&q=80',
     description:
       'Calm indoor cat with a soft coat and an easy routine. Comfortable with quiet homes.',
+    energyLevel: 'Low',
+    goodWith: ['Quiet homes', 'Older adopters'],
+    vaccinated: true,
+    medicalNotes: 'Requires regular coat grooming.',
   },
   {
     name: 'Rocky',
@@ -40,6 +48,10 @@ const petSeed = [
       'https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=900&q=80',
     description:
       'Friendly and food-motivated labrador that settles quickly and does well with families.',
+    energyLevel: 'Moderate',
+    goodWith: ['Children', 'Active families'],
+    vaccinated: true,
+    medicalNotes: 'Needs portion control to maintain ideal weight.',
   },
   {
     name: 'Daisy',
@@ -54,6 +66,10 @@ const petSeed = [
       'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=900&q=80',
     description:
       'Young rescue dog with high curiosity, quick learning, and gentle social behavior.',
+    energyLevel: 'High',
+    goodWith: ['Other dogs', 'First-time adopters'],
+    vaccinated: true,
+    medicalNotes: 'Still improving leash confidence.',
   },
   {
     name: 'Simba',
@@ -68,6 +84,10 @@ const petSeed = [
       'https://images.unsplash.com/photo-1511044568932-338cba0ad803?auto=format&fit=crop&w=900&q=80',
     description:
       'Confident cat with a playful streak and good adaptation to other calm pets.',
+    energyLevel: 'Moderate',
+    goodWith: ['Other cats', 'Indoor homes'],
+    vaccinated: true,
+    medicalNotes: 'No active medical concerns.',
   },
   {
     name: 'Coco',
@@ -82,6 +102,10 @@ const petSeed = [
       'https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?auto=format&fit=crop&w=900&q=80',
     description:
       'Gentle rabbit suited for an indoor setup with a predictable feeding and play schedule.',
+    energyLevel: 'Low',
+    goodWith: ['Quiet homes', 'Indoor setups'],
+    vaccinated: true,
+    medicalNotes: 'Needs supervised free-roam time daily.',
   },
   {
     name: 'Pepper',
@@ -96,6 +120,10 @@ const petSeed = [
       'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=900&q=80',
     description:
       'Senior companion dog that prefers gentle routines, short play sessions, and soft bedding.',
+    energyLevel: 'Low',
+    goodWith: ['Seniors', 'Calm homes'],
+    vaccinated: true,
+    medicalNotes: 'Joint support supplements are part of her routine.',
   },
   {
     name: 'Nori',
@@ -110,8 +138,11 @@ const petSeed = [
       'https://images.unsplash.com/photo-1495360010541-f48722b34f7d?auto=format&fit=crop&w=900&q=80',
     description:
       'Energetic rescue kitten with good litter habits and a strong response to interactive play.',
+    energyLevel: 'High',
+    goodWith: ['Other playful pets', 'Indoor homes'],
+    vaccinated: true,
+    medicalNotes: 'Spay appointment should be scheduled by adopter.',
   },
 ];
 
 export default petSeed;
-

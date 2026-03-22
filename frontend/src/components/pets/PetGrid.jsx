@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import PetCard from './PetCard';
 
-function PetGrid({ items, loading }) {
+function PetGrid({ items, loading, onViewDetails }) {
   if (loading) {
     return (
       <section className="pet-grid" aria-label="Loading pets">
@@ -18,9 +18,9 @@ function PetGrid({ items, loading }) {
   }
 
   return (
-    <section className="pet-grid" aria-label="Available pets">
+      <section className="pet-grid" aria-label="Available pets">
       {items.length > 0 ? (
-        items.map((pet) => <PetCard key={pet._id} pet={pet} />)
+        items.map((pet) => <PetCard key={pet._id} pet={pet} onViewDetails={onViewDetails} />)
       ) : (
         <article className="empty-state">
           <h2>No pets matched these filters.</h2>
@@ -34,6 +34,7 @@ function PetGrid({ items, loading }) {
 PetGrid.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
   loading: PropTypes.bool.isRequired,
+  onViewDetails: PropTypes.func.isRequired,
 };
 
 export default PetGrid;
