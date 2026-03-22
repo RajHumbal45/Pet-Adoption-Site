@@ -30,6 +30,20 @@ body {
   padding: 32px;
 }
 
+.workspace-layout {
+  display: grid;
+  width: min(1260px, 100%);
+  margin: 0 auto;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 20px;
+  align-items: start;
+}
+
+.listing-shell {
+  display: grid;
+  gap: 24px;
+}
+
 .hero {
   width: min(1120px, 100%);
   margin: 0 auto;
@@ -40,6 +54,14 @@ body {
 }
 
 .catalogue-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  gap: 24px;
+  align-items: end;
+}
+
+.adoption-shell {
+  width: min(1260px, 100%);
   display: grid;
   grid-template-columns: minmax(0, 1fr) 220px;
   gap: 24px;
@@ -315,6 +337,177 @@ h1 {
   box-shadow: 0 14px 36px rgba(23, 50, 77, 0.08);
 }
 
+.auth-panel {
+  display: grid;
+  gap: 18px;
+}
+
+.auth-card,
+.application-card {
+  border-radius: 24px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid #d8e4ef;
+  box-shadow: 0 14px 36px rgba(23, 50, 77, 0.08);
+}
+
+.panel-label {
+  margin: 0 0 8px;
+  color: #b85b24;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.mode-switch {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.mode-switch button {
+  border: 1px solid #d4dfeb;
+  border-radius: 999px;
+  min-height: 44px;
+  font: inherit;
+  background: #fff;
+  cursor: pointer;
+}
+
+.mode-switch button.active {
+  background: #17324d;
+  color: #eff7ff;
+  border-color: #17324d;
+}
+
+.auth-form {
+  display: grid;
+  gap: 14px;
+}
+
+.auth-form label {
+  display: grid;
+  gap: 6px;
+  font-size: 0.95rem;
+}
+
+.auth-form input {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid #d4dfeb;
+  border-radius: 14px;
+  padding: 0 14px;
+  font: inherit;
+}
+
+.session-detail {
+  margin-top: 0;
+  color: #58718a;
+}
+
+.role-pill {
+  display: inline-flex;
+  margin: 0;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 201, 107, 0.18);
+  color: #9b551e;
+  text-transform: capitalize;
+  font-weight: 700;
+}
+
+.session-stack {
+  display: grid;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.session-stack div,
+.application-item {
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: #f5f9fc;
+}
+
+.session-stack span,
+.session-stack strong {
+  display: block;
+}
+
+.session-stack span {
+  color: #6d8398;
+  font-size: 0.85rem;
+}
+
+.notice {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 0.92rem;
+}
+
+.notice.error {
+  background: rgba(245, 89, 89, 0.12);
+  color: #a73737;
+}
+
+.notice.success {
+  background: rgba(113, 216, 160, 0.18);
+  color: #1f6a46;
+}
+
+.application-copy {
+  margin: 0;
+  color: #49657f;
+}
+
+.application-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.application-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.application-item h3,
+.application-item p {
+  margin: 0;
+}
+
+.application-item p {
+  margin-top: 6px;
+  color: #58718a;
+}
+
+.status-pill {
+  align-self: start;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.status-pill.pending {
+  background: #fff1d8;
+  color: #9b551e;
+}
+
+.status-pill.approved {
+  background: #dff6e8;
+  color: #1f6a46;
+}
+
+.status-pill.rejected {
+  background: #ffe0e0;
+  color: #a73737;
+}
+
 .details-header,
 .details-title,
 .details-actions {
@@ -448,8 +641,10 @@ h1 {
   }
 
   .catalogue-shell,
+  .adoption-shell,
   .filter-bar,
-  .details-layout {
+  .details-layout,
+  .workspace-layout {
     grid-template-columns: 1fr;
   }
 

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-function PetDetailsPanel({ detailState, onClose }) {
+function PetDetailsPanel({ detailState, currentUser, adoptionState, onApply, onClose }) {
   const { item, loading, error } = detailState;
 
   return (
@@ -94,11 +94,28 @@ function PetDetailsPanel({ detailState, onClose }) {
             </section>
 
             <div className="details-actions">
-              <button className="primary-button" type="button">
-                Apply to adopt
+              <button
+                className="primary-button"
+                type="button"
+                onClick={onApply}
+                disabled={adoptionState.loading}
+              >
+                {adoptionState.loading
+                  ? 'Submitting...'
+                  : currentUser
+                    ? 'Apply to adopt'
+                    : 'Login to apply'}
               </button>
-              <p>The adoption application flow will be wired in the next user branch.</p>
+              <p>
+                {currentUser
+                  ? 'Your application will appear in the dashboard after submission.'
+                  : 'Sign in first to submit an adoption request.'}
+              </p>
             </div>
+            {adoptionState.error ? <p className="notice error">{adoptionState.error}</p> : null}
+            {adoptionState.success ? (
+              <p className="notice success">{adoptionState.success}</p>
+            ) : null}
           </div>
         </div>
       ) : null}
@@ -127,8 +144,23 @@ PetDetailsPanel.propTypes = {
     loading: PropTypes.bool.isRequired,
     error: PropTypes.string.isRequired,
   }).isRequired,
+  currentUser: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    email: PropTypes.string,
+    role: PropTypes.string,
+  }),
+  adoptionState: PropTypes.shape({
+    loading: PropTypes.bool.isRequired,
+    error: PropTypes.string.isRequired,
+    success: PropTypes.string.isRequired,
+  }).isRequired,
+  onApply: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
-export default PetDetailsPanel;
+PetDetailsPanel.defaultProps = {
+  currentUser: null,
+};
 
+export default PetDetailsPanel;
