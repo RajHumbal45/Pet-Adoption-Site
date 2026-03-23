@@ -8,7 +8,7 @@ import PetPagination from '../components/pets/PetPagination';
 import { usePets } from '../hooks/usePets';
 import { usePetDetails } from '../hooks/usePetDetails';
 
-function PetListingPage({ currentUser, onApplicationCreated }) {
+function PetListingPage({ currentUser, onApplicationCreated, onToast }) {
   const { filters, listingState, updateFilter, goToPage } = usePets();
   const [selectedPetId, setSelectedPetId] = useState('');
   const detailState = usePetDetails(selectedPetId);
@@ -29,6 +29,7 @@ function PetListingPage({ currentUser, onApplicationCreated }) {
         error: 'Sign in before applying to adopt a pet.',
         success: '',
       });
+      onToast({ type: 'error', message: 'Sign in before applying to adopt a pet.' });
       return;
     }
 
@@ -49,27 +50,46 @@ function PetListingPage({ currentUser, onApplicationCreated }) {
         error: '',
         success: data.message,
       });
+      onToast({ type: 'success', message: data.message });
       await onApplicationCreated();
     } catch (error) {
+      const message = error.response?.data?.message || 'Unable to submit application.';
       setAdoptionState({
         loading: false,
-        error: error.response?.data?.message || 'Unable to submit application.',
+        error: message,
         success: '',
       });
+      onToast({ type: 'error', message });
     }
   }
 
   return (
     <section className="listing-shell">
-      <PetFilters
-        filters={filters}
-        filterOptions={listingState.filterOptions}
-        onChange={updateFilter}
-      />
+      <section className="catalog-panel">
+        <div className="section-head">
+          <div>
+            <p className="panel-label">Pet List</p>
+            <h2>Available pets</h2>
+            <p className="application-copy">
+              Search, filter, and open a pet profile to learn more before applying.
+            </p>
+          </div>
+          {listingState.pagination ? (
+            <div className="catalog-summary">
+              <strong>{listingState.pagination.totalItems}</strong>
+              <span>pets available</span>
+            </div>
+          ) : null}
+        </div>
 
-      {listingState.error ? <p className="state-banner error">{listingState.error}</p> : null}
+        <PetFilters
+          filters={filters}
+          filterOptions={listingState.filterOptions}
+          onChange={updateFilter}
+        />
 
-      <section className="details-layout">
+        {listingState.error ? <p className="state-banner error">{listingState.error}</p> : null}
+
         <PetGrid
           items={listingState.items}
           loading={listingState.loading}
@@ -82,15 +102,17 @@ function PetListingPage({ currentUser, onApplicationCreated }) {
             });
           }}
         />
-        <PetDetailsPanel
-          detailState={detailState}
-          currentUser={currentUser}
-          adoptionState={adoptionState}
-          onApply={handleApply}
-          onClose={() => setSelectedPetId('')}
-        />
+        <PetPagination pagination={listingState.pagination} onPageChange={goToPage} />
       </section>
-      <PetPagination pagination={listingState.pagination} onPageChange={goToPage} />
+
+      <PetDetailsPanel
+        isOpen={Boolean(selectedPetId)}
+        detailState={detailState}
+        currentUser={currentUser}
+        adoptionState={adoptionState}
+        onApply={handleApply}
+        onClose={() => setSelectedPetId('')}
+      />
     </section>
   );
 }
@@ -103,6 +125,7 @@ PetListingPage.propTypes = {
     role: PropTypes.string,
   }),
   onApplicationCreated: PropTypes.func.isRequired,
+  onToast: PropTypes.func.isRequired,
 };
 
 PetListingPage.defaultProps = {

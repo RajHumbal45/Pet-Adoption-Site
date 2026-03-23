@@ -11,10 +11,16 @@ function GuestAuthPanel({
   return (
     <aside className="auth-panel">
       <section className="auth-card">
-        <p className="panel-label">Account Access</p>
-        <h2>Login or register</h2>
+        <div className="section-head">
+          <div>
+            <p className="panel-label">Account</p>
+            <h2>{mode === 'login' ? 'Welcome back' : 'Create your account'}</h2>
+          </div>
+        </div>
         <p className="application-copy">
-          Create an account to apply for pets and track your adoption status.
+          {mode === 'login'
+            ? 'Sign in to apply for pets and check your application status.'
+            : 'Create an account to apply for pets and track updates.'}
         </p>
 
         <div className="mode-switch" role="tablist" aria-label="Authentication mode">
@@ -72,22 +78,6 @@ function GuestAuthPanel({
             />
           </label>
 
-          {mode === 'register' ? (
-            <label>
-              Admin setup key
-              <input
-                name="adminSetupKey"
-                type="password"
-                value={formState.adminSetupKey}
-                onChange={onFieldChange}
-                placeholder="Optional"
-              />
-            </label>
-          ) : null}
-
-          {authState.error ? <p className="notice error">{authState.error}</p> : null}
-          {authState.success ? <p className="notice success">{authState.success}</p> : null}
-
           <button className="primary-button" type="submit" disabled={authState.loading}>
             {authState.loading
               ? 'Please wait...'
@@ -96,6 +86,12 @@ function GuestAuthPanel({
                 : 'Sign in'}
           </button>
         </form>
+
+        <p className="auth-footnote">
+          {mode === 'login'
+            ? 'You can still browse pets without signing in.'
+            : 'Create a normal account to apply for pets and track updates.'}
+        </p>
       </section>
     </aside>
   );

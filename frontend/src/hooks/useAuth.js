@@ -65,7 +65,11 @@ export function useAuth() {
     try {
       const payload =
         mode === 'register'
-          ? formState
+          ? {
+              name: formState.name,
+              email: formState.email,
+              password: formState.password,
+            }
           : { email: formState.email, password: formState.password };
       const endpoint = mode === 'register' ? '/auth/register' : '/auth/login';
       const { data } = await api.post(endpoint, payload);

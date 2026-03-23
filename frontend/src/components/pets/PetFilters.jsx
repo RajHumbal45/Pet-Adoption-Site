@@ -4,18 +4,18 @@ import { ageGroupOptions } from '../../hooks/usePets';
 function PetFilters({ filters, filterOptions, onChange }) {
   return (
     <section className="filter-bar" aria-label="Pet filters">
-      <label>
-        Search by name or breed
+      <label className="filter-field filter-search">
+        <span className="filter-label">Search</span>
         <input
           name="search"
           value={filters.search}
           onChange={onChange}
-          placeholder="Try Labrador or Luna"
+          placeholder="Search by pet name or breed"
         />
       </label>
 
-      <label>
-        Species
+      <label className="filter-field">
+        <span className="filter-label">Species</span>
         <select name="species" value={filters.species} onChange={onChange}>
           <option value="">All species</option>
           {filterOptions.species.map((species) => (
@@ -26,8 +26,8 @@ function PetFilters({ filters, filterOptions, onChange }) {
         </select>
       </label>
 
-      <label>
-        Breed
+      <label className="filter-field">
+        <span className="filter-label">Breed</span>
         <select name="breed" value={filters.breed} onChange={onChange}>
           <option value="">All breeds</option>
           {filterOptions.breeds.map((breed) => (
@@ -38,8 +38,8 @@ function PetFilters({ filters, filterOptions, onChange }) {
         </select>
       </label>
 
-      <label>
-        Age
+      <label className="filter-field">
+        <span className="filter-label">Age</span>
         <select name="ageGroup" value={filters.ageGroup} onChange={onChange}>
           {ageGroupOptions.map((option) => (
             <option key={option.value || 'all'} value={option.value}>

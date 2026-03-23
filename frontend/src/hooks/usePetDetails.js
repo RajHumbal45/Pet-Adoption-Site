@@ -28,9 +28,22 @@ export function usePetDetails(selectedPetId) {
       });
 
       try {
-        const { data } = await api.get(`/pets/${selectedPetId}`);
+        const { data } = await api.get(`/pets/${selectedPetId}`, {
+          params: {
+            _: Date.now(),
+          },
+        });
 
         if (!isActive) {
+          return;
+        }
+
+        if (!data?.item) {
+          setDetailState({
+            item: null,
+            loading: false,
+            error: 'Unable to load pet details right now. Please try again.',
+          });
           return;
         }
 

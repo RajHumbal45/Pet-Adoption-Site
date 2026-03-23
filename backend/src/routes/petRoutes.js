@@ -33,6 +33,10 @@ function mapPetPayload(body) {
 }
 
 function validatePetPayload(payload) {
+  const validGenders = ['Male', 'Female'];
+  const validSizes = ['Small', 'Medium', 'Large'];
+  const validStatuses = ['available', 'pending', 'adopted'];
+  const validEnergyLevels = ['Low', 'Moderate', 'High'];
   const requiredFields = [
     'name',
     'species',
@@ -54,6 +58,22 @@ function validatePetPayload(payload) {
 
   if (!Number.isFinite(payload.age) || payload.age < 0) {
     return 'age must be a valid number';
+  }
+
+  if (!validGenders.includes(payload.gender)) {
+    return 'gender must be Male or Female';
+  }
+
+  if (!validSizes.includes(payload.size)) {
+    return 'size must be Small, Medium, or Large';
+  }
+
+  if (!validStatuses.includes(payload.adoptionStatus)) {
+    return 'adoptionStatus must be available, pending, or adopted';
+  }
+
+  if (!validEnergyLevels.includes(payload.energyLevel)) {
+    return 'energyLevel must be Low, Moderate, or High';
   }
 
   return '';

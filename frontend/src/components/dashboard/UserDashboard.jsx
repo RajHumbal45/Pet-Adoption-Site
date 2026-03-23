@@ -1,61 +1,45 @@
 import PropTypes from 'prop-types';
 
-function UserDashboard({ user, applications, onLogout }) {
+function UserDashboard({ user, applications }) {
   const pendingCount = applications.items.filter((item) => item.status === 'pending').length;
   const approvedCount = applications.items.filter((item) => item.status === 'approved').length;
   const rejectedCount = applications.items.filter((item) => item.status === 'rejected').length;
 
   return (
     <section className="dashboard-shell">
-      <section className="hero dashboard-hero">
-        <div className="hero-copy">
-          <p className="eyebrow">User Dashboard</p>
-          <h1>{user.name}, manage your adoption journey in one place.</h1>
-          <p className="intro">
-            Track every application, review current statuses, and continue browsing pets
-            without losing your place.
+      <section className="dashboard-overview">
+        <div className="dashboard-intro-card">
+          <p className="panel-label">My Dashboard</p>
+          <h2>Welcome back, {user.name}</h2>
+          <p className="application-copy">
+            Track your adoption requests and keep browsing pets that fit your home.
           </p>
         </div>
-        <div className="hero-accent">
-          <span>Account</span>
-          <strong>{user.role}</strong>
+
+        <div className="dashboard-summary-grid">
+          <article className="dashboard-summary-card">
+            <span>Total</span>
+            <strong>{applications.items.length}</strong>
+          </article>
+          <article className="dashboard-summary-card">
+            <span>Pending</span>
+            <strong>{pendingCount}</strong>
+          </article>
+          <article className="dashboard-summary-card">
+            <span>Approved</span>
+            <strong>{approvedCount}</strong>
+          </article>
+          <article className="dashboard-summary-card">
+            <span>Rejected</span>
+            <strong>{rejectedCount}</strong>
+          </article>
         </div>
-      </section>
-
-      <section className="dashboard-grid">
-        <article className="dashboard-card">
-          <p className="panel-label">Profile</p>
-          <h2>{user.name}</h2>
-          <p className="session-detail">{user.email}</p>
-          <p className="role-pill">{user.role}</p>
-          <button className="primary-button" type="button" onClick={onLogout}>
-            Sign out
-          </button>
-        </article>
-
-        <article className="dashboard-card stats-card">
-          <p className="panel-label">Application Snapshot</p>
-          <div className="stats-grid">
-            <div>
-              <span>Pending</span>
-              <strong>{pendingCount}</strong>
-            </div>
-            <div>
-              <span>Approved</span>
-              <strong>{approvedCount}</strong>
-            </div>
-            <div>
-              <span>Rejected</span>
-              <strong>{rejectedCount}</strong>
-            </div>
-          </div>
-        </article>
       </section>
 
       <section className="dashboard-card">
         <div className="dashboard-section-header">
           <div>
-            <p className="panel-label">My Applications</p>
+            <p className="panel-label">Applications</p>
             <h2>Application history</h2>
           </div>
         </div>
@@ -70,7 +54,7 @@ function UserDashboard({ user, applications, onLogout }) {
           <div className="dashboard-application-list">
             {applications.items.map((application) => (
               <article className="dashboard-application-item" key={application._id}>
-                <div>
+                <div className="dashboard-application-copy">
                   <h3>{application.pet.name}</h3>
                   <p>
                     {application.pet.breed} - {application.pet.location}
@@ -109,7 +93,6 @@ UserDashboard.propTypes = {
     loading: PropTypes.bool.isRequired,
     error: PropTypes.string.isRequired,
   }).isRequired,
-  onLogout: PropTypes.func.isRequired,
 };
 
 export default UserDashboard;

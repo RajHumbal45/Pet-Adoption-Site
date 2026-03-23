@@ -1,43 +1,40 @@
 import PropTypes from 'prop-types';
+import { getPetPlaceholder } from '../../utils/petPlaceholder';
 
 function PetCard({ pet, onViewDetails }) {
   return (
     <article className="pet-card">
-      <img
-        className="pet-image"
-        src={pet.imageUrl}
-        alt={`${pet.name} the ${pet.breed}`}
-        loading="lazy"
-        decoding="async"
-      />
+      <div className="pet-media-wrap">
+        <img
+          className="pet-image"
+          src={pet.imageUrl}
+          alt={`${pet.name} the ${pet.breed}`}
+          loading="lazy"
+          decoding="async"
+          onError={(event) => {
+            event.currentTarget.onerror = null;
+            event.currentTarget.src = getPetPlaceholder(pet);
+          }}
+        />
+        <span className="pet-species-chip">{pet.species}</span>
+      </div>
       <div className="pet-copy">
         <div className="pet-heading">
           <div>
             <h2>{pet.name}</h2>
-            <p>
-              {pet.breed} - {pet.species}
-            </p>
+            <p>{pet.breed}</p>
           </div>
           <span className="pet-badge">{pet.age} yrs</span>
         </div>
+        <p className="pet-meta-line">
+          {pet.location} • {pet.size} • {pet.gender}
+        </p>
         <p className="pet-description">{pet.description}</p>
-        <dl className="pet-meta">
-          <div>
-            <dt>Location</dt>
-            <dd>{pet.location}</dd>
-          </div>
-          <div>
-            <dt>Size</dt>
-            <dd>{pet.size}</dd>
-          </div>
-          <div>
-            <dt>Gender</dt>
-            <dd>{pet.gender}</dd>
-          </div>
-        </dl>
-        <button className="secondary-button" type="button" onClick={() => onViewDetails(pet._id)}>
-          View details
-        </button>
+        <div className="pet-card-footer">
+          <button className="secondary-button" type="button" onClick={() => onViewDetails(pet._id)}>
+            View details
+          </button>
+        </div>
       </div>
     </article>
   );

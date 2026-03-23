@@ -56,6 +56,7 @@ export function useAdminPets(user) {
     success: '',
     saving: false,
     editingId: '',
+    isFormOpen: false,
     formState: initialFormState,
   });
 
@@ -71,6 +72,7 @@ export function useAdminPets(user) {
         success: '',
         saving: false,
         editingId: '',
+        isFormOpen: false,
         formState: initialFormState,
       }));
       return undefined;
@@ -129,10 +131,22 @@ export function useAdminPets(user) {
     }));
   }
 
+  function openCreateForm() {
+    setAdminState((current) => ({
+      ...current,
+      editingId: '',
+      isFormOpen: true,
+      success: '',
+      error: '',
+      formState: initialFormState,
+    }));
+  }
+
   function startEditing(pet) {
     setAdminState((current) => ({
       ...current,
       editingId: pet._id,
+      isFormOpen: true,
       success: '',
       error: '',
       formState: mapPetToForm(pet),
@@ -143,6 +157,7 @@ export function useAdminPets(user) {
     setAdminState((current) => ({
       ...current,
       editingId: '',
+      isFormOpen: false,
       success: '',
       error: '',
       formState: initialFormState,
@@ -181,6 +196,7 @@ export function useAdminPets(user) {
         ...current,
         saving: false,
         editingId: '',
+        isFormOpen: false,
         formState: initialFormState,
         success: adminState.editingId ? 'Pet updated.' : 'Pet created.',
       }));
@@ -229,6 +245,7 @@ export function useAdminPets(user) {
 
   return {
     adminState,
+    openCreateForm,
     updateField,
     startEditing,
     resetForm,

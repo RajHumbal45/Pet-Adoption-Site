@@ -1,129 +1,164 @@
 import PropTypes from 'prop-types';
+import { getPetPlaceholder } from '../../utils/petPlaceholder';
 
-function PetDetailsPanel({ detailState, currentUser, adoptionState, onApply, onClose }) {
+function PetDetailsPanel({ isOpen, detailState, currentUser, adoptionState, onApply, onClose }) {
   const { item, loading, error } = detailState;
+  const goodWith = item?.goodWith ?? [];
+  const energyLevel = item?.energyLevel || 'Not specified';
+  const vaccinatedLabel = typeof item?.vaccinated === 'boolean'
+    ? item.vaccinated
+      ? 'Yes'
+      : 'No'
+    : 'Not specified';
+
+  if (!isOpen) {
+    return null;
+  }
 
   return (
-    <aside className="details-panel" aria-live="polite">
-      <div className="details-header">
-        <div>
-          <p className="eyebrow panel-eyebrow">Pet Details</p>
-          <h2>Meet your next companion</h2>
-        </div>
-        {item || error ? (
+    <div className="modal-backdrop" role="presentation" onClick={onClose}>
+      <aside
+        className="details-panel details-modal"
+        aria-live="polite"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Pet profile"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <div className="section-head">
+          <div>
+            <p className="eyebrow panel-eyebrow">Pet Details</p>
+            <h2>Pet profile</h2>
+          </div>
           <button className="icon-button" type="button" onClick={onClose} aria-label="Close details">
             Close
           </button>
-        ) : null}
-      </div>
-
-      {!item && !loading && !error ? (
-        <div className="details-empty">
-          <p>Select any pet card to view a richer profile and adoption-ready information.</p>
         </div>
-      ) : null}
 
-      {loading ? (
-        <div className="details-loading">
-          <div className="skeleton-media" />
-          <div className="skeleton-line long" />
-          <div className="skeleton-line" />
-          <div className="skeleton-line short" />
-        </div>
-      ) : null}
-
-      {error ? <p className="state-banner error details-error">{error}</p> : null}
-
-      {item ? (
-        <div className="details-content">
-          <img className="details-image" src={item.imageUrl} alt={`${item.name} the ${item.breed}`} />
-          <div className="details-copy">
-            <div className="details-title">
-              <div>
-                <h3>{item.name}</h3>
-                <p>
-                  {item.breed} - {item.species}
-                </p>
-              </div>
-              <span className="pet-badge">{item.age} yrs</span>
-            </div>
-
-            <p className="pet-description">{item.description}</p>
-
-            <dl className="detail-facts">
-              <div>
-                <dt>Location</dt>
-                <dd>{item.location}</dd>
-              </div>
-              <div>
-                <dt>Gender</dt>
-                <dd>{item.gender}</dd>
-              </div>
-              <div>
-                <dt>Size</dt>
-                <dd>{item.size}</dd>
-              </div>
-              <div>
-                <dt>Energy</dt>
-                <dd>{item.energyLevel}</dd>
-              </div>
-              <div>
-                <dt>Vaccinated</dt>
-                <dd>{item.vaccinated ? 'Yes' : 'No'}</dd>
-              </div>
-              <div>
-                <dt>Status</dt>
-                <dd>{item.adoptionStatus}</dd>
-              </div>
-            </dl>
-
-            <section className="detail-section">
-              <h4>Good Match For</h4>
-              <div className="tag-list">
-                {item.goodWith.map((entry) => (
-                  <span className="tag-chip" key={entry}>
-                    {entry}
-                  </span>
-                ))}
-              </div>
-            </section>
-
-            <section className="detail-section">
-              <h4>Care Notes</h4>
-              <p>{item.medicalNotes || 'No additional care notes provided.'}</p>
-            </section>
-
-            <div className="details-actions">
-              <button
-                className="primary-button"
-                type="button"
-                onClick={onApply}
-                disabled={adoptionState.loading}
-              >
-                {adoptionState.loading
-                  ? 'Submitting...'
-                  : currentUser
-                    ? 'Apply to adopt'
-                    : 'Login to apply'}
-              </button>
-              <p>
-                {currentUser
-                  ? 'Your application will appear in the dashboard after submission.'
-                  : 'Sign in first to submit an adoption request.'}
-              </p>
-            </div>
-            {adoptionState.error ? <p className="notice error">{adoptionState.error}</p> : null}
-            {adoptionState.success ? (
-              <p className="notice success">{adoptionState.success}</p>
-            ) : null}
+        {loading ? (
+          <div className="details-loading">
+            <div className="skeleton-media" />
+            <div className="skeleton-line long" />
+            <div className="skeleton-line" />
+            <div className="skeleton-line short" />
           </div>
-        </div>
-      ) : null}
-    </aside>
+        ) : null}
+
+        {error ? <p className="state-banner error details-error">{error}</p> : null}
+
+        {!item && !loading && !error ? (
+          <div className="details-empty">
+            <p className="details-empty-title">Pet details are not available right now.</p>
+            <p>Close this panel and try opening the profile again.</p>
+          </div>
+        ) : null}
+
+        {item ? (
+          <div className="details-content">
+            <div className="details-hero">
+              <img
+                className="details-image"
+                src={item.imageUrl}
+                alt={`${item.name} the ${item.breed}`}
+                onError={(event) => {
+                  event.currentTarget.onerror = null;
+                  event.currentTarget.src = getPetPlaceholder(item);
+                }}
+              />
+              <div className="details-hero-overlay">
+                <span className={`status-pill ${item.adoptionStatus}`}>{item.adoptionStatus}</span>
+                <span className="pet-badge">{item.age} yrs</span>
+              </div>
+            </div>
+            <div className="details-copy">
+              <div className="details-title">
+                <div>
+                  <h3>{item.name}</h3>
+                  <p>{item.breed} - {item.species}</p>
+                </div>
+              </div>
+
+              <p className="pet-description">{item.description}</p>
+
+              <dl className="detail-facts">
+                <div>
+                  <dt>Location</dt>
+                  <dd>{item.location}</dd>
+                </div>
+                <div>
+                  <dt>Gender</dt>
+                  <dd>{item.gender}</dd>
+                </div>
+                <div>
+                  <dt>Size</dt>
+                  <dd>{item.size}</dd>
+                </div>
+                <div>
+                  <dt>Energy</dt>
+                  <dd>{energyLevel}</dd>
+                </div>
+                <div>
+                  <dt>Vaccinated</dt>
+                  <dd>{vaccinatedLabel}</dd>
+                </div>
+                <div>
+                  <dt>Status</dt>
+                  <dd>{item.adoptionStatus}</dd>
+                </div>
+              </dl>
+
+            <section className="detail-section">
+              <h4>Good fit for</h4>
+              {goodWith.length > 0 ? (
+                <div className="tag-list">
+                  {goodWith.map((entry) => (
+                    <span className="tag-chip" key={entry}>
+                      {entry}
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <p>No compatibility notes available.</p>
+              )}
+            </section>
+
+              <section className="detail-section">
+                <h4>Care notes</h4>
+                <p>{item.medicalNotes || 'No additional care notes provided.'}</p>
+              </section>
+
+              <div className="details-actions">
+                <div>
+                  <p className="panel-label">Next Step</p>
+                  <p>
+                    {currentUser
+                      ? 'Send an adoption request from here. You will see updates in your dashboard.'
+                      : 'Sign in first to submit an adoption request for this pet.'}
+                  </p>
+                </div>
+                <button
+                  className="primary-button"
+                  type="button"
+                  onClick={onApply}
+                  disabled={adoptionState.loading}
+                >
+                  {adoptionState.loading
+                    ? 'Submitting...'
+                    : currentUser
+                      ? 'Apply to adopt'
+                      : 'Login to apply'}
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : null}
+      </aside>
+    </div>
   );
 }
 
 PetDetailsPanel.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
   detailState: PropTypes.shape({
     item: PropTypes.shape({
       name: PropTypes.string,
@@ -164,4 +199,3 @@ PetDetailsPanel.defaultProps = {
 };
 
 export default PetDetailsPanel;
-

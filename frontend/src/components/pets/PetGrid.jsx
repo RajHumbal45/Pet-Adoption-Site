@@ -18,7 +18,7 @@ function PetGrid({ items, loading, onViewDetails }) {
   }
 
   return (
-      <section className="pet-grid" aria-label="Available pets">
+    <section className="pet-grid" aria-label="Available pets">
       {items.length > 0 ? (
         items.map((pet) => <PetCard key={pet._id} pet={pet} onViewDetails={onViewDetails} />)
       ) : (
